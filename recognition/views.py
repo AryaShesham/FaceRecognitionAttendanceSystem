@@ -130,7 +130,7 @@ def mark_your_attendance(request):
         encodeListForKnownFaces = do_encodings(imagesList)
 
         capture = cv2.VideoCapture(0)
-        cv2.waitKey(1)
+        # cv2.waitKey(1)
 
         while True:
             success, img = capture.read()
@@ -146,7 +146,7 @@ def mark_your_attendance(request):
                 faceDist = face_recognition.face_distance(encodeListForKnownFaces, encodingOfFace)
 
                 for elem in faceDist:
-                    cv2.waitKey(21)
+                    cv2.waitKey(1)
                     if elem <= 0.45:
 
                         with open(f'attendance_data/{request.user.username}/Attendance.csv', 'r+') as f:
@@ -164,15 +164,16 @@ def mark_your_attendance(request):
                                 dateTimeString = now.strftime('%H:%M:%S')
                                 f.writelines(f'\n{today_date}, {request.user.username}, log in: {dateTimeString}')
 
+                                capture.release()
+                                cv2.destroyAllWindows()
+
                             else:
                                 print("Already Logged in today.")
+                            return render(request, 'recognition/employee_dashboard.html')
 
-                        return render(request, 'recognition/employee_dashboard.html')
 
                     else:
                         return render(request, 'recognition/home.html')
-        capture.release()
-        cv2.destroyAllWindows()
 
 
 def mark_your_attendance_out(request):
@@ -216,7 +217,7 @@ def mark_your_attendance_out(request):
                 faceDist = face_recognition.face_distance(encodeListForKnownFaces, encodingOfFace)
 
                 for elem in faceDist:
-                    cv2.waitKey(21)
+                    cv2.waitKey(1)
                     if elem <= 0.45:
 
                         with open(f'attendance_data/{request.user.username}/Attendance.csv', 'r+') as f:
@@ -235,6 +236,9 @@ def mark_your_attendance_out(request):
                                 dateTimeString = now.strftime('%H:%M:%S')
                                 f.writelines(f', log out: {dateTimeString}.\n')
 
+                                capture.release()
+                                cv2.destroyAllWindows()
+
                             else:
                                 print("Haven't logged in today")
 
@@ -242,9 +246,6 @@ def mark_your_attendance_out(request):
 
                     else:
                         return render(request, 'recognition/home.html')
-
-        capture.release()
-        cv2.destroyAllWindows()
 
 
 @login_required
