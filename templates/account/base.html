@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block head_title %}{% endblock %}</title>
+  {% block extra_head %} {% endblock %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'navbarCustom.css' %}" />
+  {% load crispy_forms_filters %}
+</head>
+
+<body>
+  {% block body %} {% if messages %}
+  <div
+    class="container col-md-4 justify-content-center alert alert-primary alert-dismissible fade show px-0 pt-2 pb-0 mt-2"
+    role="alert">
+    <ul>
+      {% for message in messages %}
+      <li>{{message}}</li>
+      {% endfor %}
+    </ul>
+    <button type="button" class="btn-close pt-1" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+  {% block content %} {% endblock %} {% endblock %} {% block extra_body %}
+  {%endblock %}
+</body>
+
+</html>

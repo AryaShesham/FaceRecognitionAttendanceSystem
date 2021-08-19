@@ -1,0 +1,35 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% comment %} <link rel="stylesheet" href="{% static 'navbarCustom.css' %}" /> {% endcomment %}
+
+
+{% block content %}
+
+<div class="container col-md-4 justify-content-center" style="margin-left: 36vw; box-sizing: border-box;">
+
+  <i class="fa fa-twitter"
+    style="font-size:43px; margin-top: 20px;margin-bottom: 20px; margin-left: 180px ; color:#0f9afb"></i>
+
+  <h1 style="font-family:Sarpanch ExtraBold;">{% trans "Create your account" %}</h1>
+
+  <p>{% blocktrans %}Already have an account? Then <a style="text-decoration: none; color: #0f9afb;"
+      href="{{ login_url }}">sign in</a> here.{% endblocktrans %}</p>
+
+  <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+    {% csrf_token %}
+    {{ form| crispy }}
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <button class="btn mt-3 custom-hover"
+      style="background-color:#4baaee; font-weight: bolder;color: aliceblue; margin-left: 7px; padding-inline: 200px; border-radius: 50px;"
+      type="submit">{% trans "Sign Up" %} &raquo;</button>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "account/base.html" %} {% load i18n %} {% load crispy_forms_filters %} {% load static %}
+<link rel="stylesheet" href="{% static 'navbarCustom.css' %}" />
+
+{% block head_title %}{% trans "Sign Out" %}{% endblock %} {% block content %}
+
+<div class="container col-md-4 justify-content-center text-center"
+  style="margin-left:33vw; margin-top: 20vh; box-sizing: border-box;">
+
+  <h1>{% trans "Sign Out" %}</h1>
+
+  <p>{% trans 'Are you sure you want to sign out?' %}</p>
+
+  <form method="post" action="{% url 'account_logout' %}">
+    {% csrf_token %} {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <div class="custom-hover">
+      <button class="btn custom-hover" style="
+      background-color: #4baaee;
+      font-weight: bolder;
+      color: aliceblue;
+      margin-left: 7px;
+      padding-inline: 100px;
+      border-radius: 30px;
+      " type="submit">
+        {% trans 'Sign Out' %}
+      </button>
+    </div>
+  </form>
+
+</div>
+{% endblock %}
